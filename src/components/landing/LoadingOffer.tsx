@@ -7,7 +7,7 @@ export function LoadingOffer() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const totalTime = 120 * 1000; // 120 segundos em milissegundos
+    const totalTime = 120 * 1000; // 120 segundos
     const intervalTime = 100; // atualiza a cada 100ms para suavidade
     const increments = totalTime / intervalTime;
     const progressIncrement = 100 / increments;
@@ -28,7 +28,7 @@ export function LoadingOffer() {
   return (
     <div className="container mx-auto px-4 max-w-3xl md:max-w-[700px] py-8 text-center">
         <p className="text-lg font-medium text-primary mb-3 animate-pulse">
-            Sua oferta especial está sendo carregada... Continue assistindo!
+            Tu oferta especial se está cargando... ¡Sigue viendo!
         </p>
         <Progress value={progress} className="w-full h-3" />
         <p className='text-xs text-muted-foreground mt-2'>{Math.round(progress)}%</p>
