@@ -9,6 +9,7 @@ import { TestimonialSection } from '@/components/landing/TestimonialSection';
 import { MidPageOfferSection } from '@/components/landing/MidPageOfferSection';
 import { Footer } from '@/components/landing/Footer';
 import { AuthorityLogos } from '@/components/landing/AuthorityLogos';
+import { LoadingOffer } from '@/components/landing/LoadingOffer';
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
@@ -26,6 +27,8 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
         <AuthorityLogos />
+
+        {!showContent && <LoadingOffer />}
 
         {showContent && (
           <>
