@@ -52,29 +52,33 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function () {
-                var PIXEL_ID = "68f31b1b41bbf871c3c5652f";
+                const PIXEL_ID = "68f31b1b41bbf871c3c5652f";
 
-                function loadPixel() {
+                function waitForUtms(retries = 50) {
+                  if (window.utmify && window.utmify._id) {
+                    initPixel();
+                  } else if (retries > 0) {
+                    setTimeout(() => waitForUtms(retries - 1), 200);
+                  } else {
+                    console.warn("[UTMify] _id não gerado — pixel não será inicializado para evitar erro 400.");
+                  }
+                }
+
+                function initPixel() {
                   if (window.__utmifyPixelLoaded) return;
                   window.__utmifyPixelLoaded = true;
+                  window.pixelId = PIXEL_ID;
 
-                  window.pixelId = PIXEL_ID; // precisa estar setado ANTES do pixel.js
-                  var s = document.createElement("script");
+                  const s = document.createElement("script");
                   s.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
                   s.async = true;
                   s.defer = true;
                   document.head.appendChild(s);
                 }
 
-                var utms = document.getElementById("utmify-utms");
+                const utms = document.getElementById("utmify-utms");
                 if (utms) {
-                  utms.addEventListener("load", loadPixel);
-                  utms.addEventListener("error", function () {
-                    console.warn("[UTMify] UTMs não carregou; não vou injetar o pixel para evitar 400.");
-                  });
-                } else {
-                  // fallback: se o script não existe por algum motivo, tenta assim mesmo
-                  loadPixel();
+                    utms.addEventListener("load", () => waitForUtms());
                 }
               })();
             `,
