@@ -33,7 +33,7 @@ export default function RootLayout({
         ></Script>
         <Script id="utmify-pixel" strategy="lazyOnload">
           {`
-            window.pixelId = "68d4384396d6eb6fca9c6acc";
+            window.pixelId = "68f31b1b41bbf871c3c5652f";
             (function () {
               var a = document.createElement("script");
               a.async = true; a.defer = true;
