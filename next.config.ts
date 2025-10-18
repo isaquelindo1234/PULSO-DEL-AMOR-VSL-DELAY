@@ -1,15 +1,5 @@
 import type {NextConfig} from 'next';
 
-const cspHeader = `
-    default-src 'self' https:;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.utmify.com.br https://fast.wistia.com;
-    connect-src 'self' https://tracking.utmify.com.br https: wss:;
-    img-src 'self' https: data:;
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    font-src 'self' https://fonts.gstatic.com;
-    frame-src 'self' https://www.youtube.com;
-`;
-
 const nextConfig: NextConfig = {
   output: 'export',
   /* config options here */
@@ -77,19 +67,6 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
-  },
-  async headers() {
-    return [
-        {
-            source: '/(.*)',
-            headers: [
-                {
-                    key: 'Content-Security-Policy',
-                    value: cspHeader.replace(/\s{2,}/g, ' ').trim(),
-                },
-            ],
-        },
-    ]
   },
 };
 
