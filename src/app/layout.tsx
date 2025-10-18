@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es" className="dark" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -22,7 +22,7 @@ export default function RootLayout({
         <Script src="https://fast.wistia.com/assets/external/E-v1.js" async />
         <Script src="https://fast.wistia.com/player.js" async />
       </head>
-      <body className="font-body antialiased bg-background">
+      <body className="font-body antialiased bg-background" suppressHydrationWarning>
         {children}
         <Toaster />
         <Script
