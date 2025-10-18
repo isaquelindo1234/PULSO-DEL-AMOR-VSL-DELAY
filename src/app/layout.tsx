@@ -79,6 +79,8 @@ export default function RootLayout({
                 const utms = document.getElementById("utmify-utms");
                 if (utms) {
                     utms.addEventListener("load", () => waitForUtms());
+                } else {
+                    waitForUtms();
                 }
               })();
             `,
