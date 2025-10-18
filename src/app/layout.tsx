@@ -38,28 +38,45 @@ export default function RootLayout({
         <Script src="https://fast.wistia.com/assets/external/E-v1.js" async />
         <Script src="https://fast.wistia.com/player.js" async />
         
-        {/* 🔹 UTMify – captura de UTMs */}
-        <script
+        {/* 1) UTMify – UTMs (carrega primeiro, sem defer/async p/ evitar corrida) */}
+        <Script
+          id="utmify-utms"
           src="https://cdn.utmify.com.br/scripts/utms/latest.js"
           data-utmify-prevent-xcod-sck
           data-utmify-prevent-subids
-          async
-          defer
-        ></script>
+        ></Script>
 
-        {/* 🔹 UTMify – Pixel */}
-        <script
+        {/* 2) UTMify – Pixel (só injeta DEPOIS que o UTMs terminar de carregar) */}
+        <Script
+          id="utmify-pixel-loader"
           dangerouslySetInnerHTML={{
             __html: `
-              window.pixelId = "68f31b1b41bbf871c3c5652f";
-              if (!window.__utmifyPixelLoaded) {
-                window.__utmifyPixelLoaded = true;
-                var a = document.createElement("script");
-                a.async = true;
-                a.defer = true;
-                a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
-                document.head.appendChild(a);
-              }
+              (function () {
+                var PIXEL_ID = "68f31b1b41bbf871c3c5652f";
+
+                function loadPixel() {
+                  if (window.__utmifyPixelLoaded) return;
+                  window.__utmifyPixelLoaded = true;
+
+                  window.pixelId = PIXEL_ID; // precisa estar setado ANTES do pixel.js
+                  var s = document.createElement("script");
+                  s.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+                  s.async = true;
+                  s.defer = true;
+                  document.head.appendChild(s);
+                }
+
+                var utms = document.getElementById("utmify-utms");
+                if (utms) {
+                  utms.addEventListener("load", loadPixel);
+                  utms.addEventListener("error", function () {
+                    console.warn("[UTMify] UTMs não carregou; não vou injetar o pixel para evitar 400.");
+                  });
+                } else {
+                  // fallback: se o script não existe por algum motivo, tenta assim mesmo
+                  loadPixel();
+                }
+              })();
             `,
           }}
         />
