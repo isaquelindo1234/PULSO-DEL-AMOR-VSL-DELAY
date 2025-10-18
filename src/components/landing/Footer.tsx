@@ -1,6 +1,15 @@
+'use client';
+
 import { Music4, Twitter, Instagram, Facebook } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export function Footer() {
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   return (
     <footer className="py-10 bg-card border-t border-border text-center md:text-left">
       <div className="container mx-auto px-4">
@@ -40,7 +49,7 @@ export function Footer() {
           </div>
         </div>
         <div className="text-center text-sm text-muted-foreground mt-8 border-t border-border pt-6">
-          <p>© {new Date().getFullYear()} Todos los derechos reservados.</p>
+          <p>© {currentYear} Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
