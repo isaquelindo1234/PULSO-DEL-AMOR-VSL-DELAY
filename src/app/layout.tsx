@@ -32,23 +32,33 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark" suppressHydrationWarning>
       <head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="
+            default-src 'self' https:;
+            script-src 'self' https://cdn.utmify.com.br https://fast.wistia.com 'unsafe-inline' 'unsafe-eval';
+            connect-src 'self' https://tracking.utmify.com.br https: wss:;
+            img-src 'self' https: data:;
+            style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+            font-src 'self' https://fonts.gstatic.com data:;
+            frame-src 'self' https://www.youtube.com https://fast.wistia.com https://*.wistia.com;
+          "
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+        
         <Script src="https://fast.wistia.com/assets/external/E-v1.js" async />
         <Script src="https://fast.wistia.com/player.js" async />
         
-        {/* 1) UTMify – UTMs (carrega primeiro, sem defer/async p/ evitar corrida) */}
-        <Script
+        <script
           id="utmify-utms"
           src="https://cdn.utmify.com.br/scripts/utms/latest.js"
           data-utmify-prevent-xcod-sck
           data-utmify-prevent-subids
-        ></Script>
+        ></script>
 
-        {/* 2) UTMify – Pixel (só injeta DEPOIS que o UTMs terminar de carregar) */}
-        <Script
-          id="utmify-pixel-loader"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function () {

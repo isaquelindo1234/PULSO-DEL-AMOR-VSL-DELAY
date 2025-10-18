@@ -1,11 +1,7 @@
 # Settings to manage and configure a Firebase App Hosting backend.
 # https://firebase.google.com/docs/app-hosting/configure
 
-headers:
-  - source: /.*
-    headers:
-      - key: Content-Security-Policy
-        value: "default-src 'self' https:; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.utmify.com.br https://fast.wistia.com; connect-src 'self' https://tracking.utmify.com.br https: wss:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://www.youtube.com https://fast.wistia.com https://*.wistia.com;"
+headers: []
 runConfig:
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
